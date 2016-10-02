@@ -1,0 +1,18 @@
+{
+  "name": "loudaround-api",
+  "version": "0.0.1",
+  "description": "[![Build Status](https://travis-ci.org/rporrini/loudaround-api.svg?branch=master)](https://travis-ci.org/rporrini/loudaround-api)",
+  "scripts": {
+    "test": "echo 'hello world!'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rporrini/loudaround-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rporrini/loudaround-api/issues"
+  },
+  "homepage": "https://github.com/rporrini/loudaround-api#readme"
+}
