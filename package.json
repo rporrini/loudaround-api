@@ -3,16 +3,19 @@
   "version": "0.0.1",
   "description": "[![Build Status](https://travis-ci.org/rporrini/loudaround-api.svg?branch=master)](https://travis-ci.org/rporrini/loudaround-api)",
   "scripts": {
-    "test": "echo 'hello world!'"
+    "test": "./node_modules/.bin/mocha --reporter list"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rporrini/loudaround-api.git"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/rporrini/loudaround-api/issues"
+  "homepage": "https://github.com/rporrini/loudaround-api",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.1.0"
   },
-  "homepage": "https://github.com/rporrini/loudaround-api#readme"
+  "dependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.1.0"
+  }
 }
