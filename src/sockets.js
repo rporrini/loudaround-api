@@ -8,6 +8,5 @@ const startOn = (port) => {
 }
 
 module.exports = {
-  startOn: startOn,
-  stop: () => {}
+  startOn: startOn
 }
