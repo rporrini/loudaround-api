@@ -1,6 +1,6 @@
 describe('alive socket', function() {
   it('should listen for incoming connections', function(done) {
-    sockets.connect().on('open', function open() {
+    sockets.connect('/alive').on('open', function open() {
       done();
     });
   });
