@@ -4,7 +4,7 @@
   "description": "[![Build Status](https://travis-ci.org/rporrini/loudaround-api.svg?branch=master)](https://travis-ci.org/rporrini/loudaround-api)",
   "scripts": {
     "start": "node src/web.js",
-    "test": "./node_modules/.bin/mocha --reporter dot */**/*.test.js"
+    "test": "./node_modules/.bin/mocha --reporter dot test/_fixture.js */**/*.test.js"
   },
   "main": "src/web.js",
   "repository": {

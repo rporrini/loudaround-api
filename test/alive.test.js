@@ -1,4 +1,3 @@
-const expect = require('chai').expect;
 const socket = require('ws');
 const app = require('../src/application.js');
 
