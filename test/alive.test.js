@@ -12,7 +12,7 @@ describe('alive socket', function() {
   });
 
   it('should listen for incoming connections', function(done) {
-    socket('ws://localhost:6666/alive')
+    socket('ws://localhost:6666')
     .on('open', function open() {
       done();
     });
