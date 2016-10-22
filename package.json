@@ -3,9 +3,10 @@
   "version": "0.0.1",
   "description": "[![Build Status](https://travis-ci.org/rporrini/loudaround-api.svg?branch=master)](https://travis-ci.org/rporrini/loudaround-api)",
   "scripts": {
-    "start": "node scr/index.js",
+    "start": "node scr/web.js",
     "test": "./node_modules/.bin/mocha --reporter dot */**/*.test.js"
   },
+  "main": "src/web.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rporrini/loudaround-api.git"
@@ -19,5 +20,8 @@
   "dependencies": {
     "express": "^4.14.0",
     "express-ws": "^2.0.0"
+  },
+  "engines": {
+    "node": "6.5.0"
   }
 }
