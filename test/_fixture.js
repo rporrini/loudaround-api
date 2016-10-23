@@ -1,6 +1,6 @@
 global.expect = require('chai').expect;
 global.sockets = require('./sockets.testdouble.js');
 
-before(function(){
+beforeEach(function(){
   sockets.start();
 });
