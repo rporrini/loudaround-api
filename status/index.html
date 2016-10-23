@@ -10,6 +10,9 @@
       <div ng-show="posts.status.alive" style="width: 100%; height: 20px; background-color: green"></div>
       <div ng-show="posts.status.ko" style="width: 100%; height: 20px; background-color: red"></div>
       <div ng-show="posts.status.pending" style="width: 100%; height: 20px; background-color: yellow"></div>
+      <textarea readonly style="margin-top: 20px; margin-bottom:20px; width: 55%; height: 200px;" ng-model="posts.board"></textarea>
+      <input type="text" ng-model="posts.message" style="width:50%; height: 30px;"/>
+      <button ng-click="posts.send(posts.message)" style="height: 36px;">Send</button>
     </div>
   </body>
 </html>
