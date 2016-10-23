@@ -1,8 +1,11 @@
 const express = require('express');
 const application = express();
 const sockets = require('express-ws')(application);
+const path = require('path');
 
 const startOn = port => {
+
+  application.use('/status', express.static(path.join(__dirname, '..', '/status')));
 
   application.ws('/alive', (ws, req) => {
     ws.send('OK');

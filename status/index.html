@@ -1,0 +1,15 @@
+<!doctype html>
+<html ng-app='status'>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
+    <script src="app.js"></script>
+  </head>
+  <body>
+    <div ng-controller="PostsController as posts">
+      <div ng-show="posts.status.alive" style="width: 100%; height: 20px; background-color: green"></div>
+      <div ng-show="posts.status.ko" style="width: 100%; height: 20px; background-color: red"></div>
+      <div ng-show="posts.status.pending" style="width: 100%; height: 20px; background-color: yellow"></div>
+    </div>
+  </body>
+</html>
