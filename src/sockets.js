@@ -14,7 +14,6 @@ const startOn = port => {
       sockets.getWss()
              .clients
              .filter(client => client !== ws)
-             .filter(client => client.upgradeReq.url === req.url)
              .forEach(client => client.send(message.data));
     };
   });
