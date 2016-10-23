@@ -1,4 +1,4 @@
-describe('alive socket', function() {
+describe('/alive socket', function() {
 
   it('should listen for incoming connections', function(done) {
 

@@ -10,11 +10,14 @@ const connect = (path) => {
 };
 
 module.exports = {
+
   start: () => {
     server.startOn(PORT)
   },
+
   post: () => connect('/post'),
   alive: () => connect('/alive'),
+  any: () => connect('/'),
 
   dropActiveConnections: () => {
     openSockets.forEach(socket => socket.close());

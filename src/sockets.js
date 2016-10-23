@@ -10,8 +10,10 @@ const startOn = port => {
 
   application.ws('/post', (ws, req) => {
     ws.onmessage = message => {
-      sockets.getWss().clients.forEach( client => {
-        client.send(message.data);
+      sockets.getWss().clients.forEach(client => {
+        if (client.upgradeReq.url === '/post/.websocket') {
+          client.send(message.data)
+        };
       });
     };
   });
