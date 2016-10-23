@@ -3,7 +3,6 @@ describe('alive socket', function() {
   it('should listen for incoming connections', function(done) {
 
     sockets.connect('/alive').on('open', function() {
-      this.close();
       done();
     });
 
@@ -13,7 +12,6 @@ describe('alive socket', function() {
 
     sockets.connect('/alive').on('message', function(data) {
       expect(data).to.be.equal('OK');
-      this.close();
       done();
     });
 

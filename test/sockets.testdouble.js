@@ -1,6 +1,19 @@
+const socket = require('ws');
+const server = require('../src/sockets.js');
+
 const PORT = 6666;
+const openSockets = [];
 
 module.exports = {
-  start: () => require('../src/sockets.js').startOn(PORT),
-  connect: (path) => require('ws')(`ws://localhost:${PORT}${path}`)
+  start: () => {
+    server.startOn(PORT)
+  },
+  connect: (path) => {
+    const newSocket = socket(`ws://localhost:${PORT}${path}`);
+    openSockets.push(newSocket);
+    return newSocket;
+  },
+  dropActiveConnections: () => {
+    openSockets.forEach(socket => socket.close());
+  }
 }
