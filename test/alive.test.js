@@ -2,7 +2,7 @@ describe('alive socket', function() {
 
   it('should listen for incoming connections', function(done) {
 
-    sockets.connect('/alive').on('open', function() {
+    sockets.alive().on('open', function() {
       done();
     });
 
@@ -10,7 +10,7 @@ describe('alive socket', function() {
 
   it('should answer with an OK message', function(done) {
 
-    sockets.connect('/alive').on('message', function(data) {
+    sockets.alive().on('message', function(data) {
       expect(data).to.be.equal('OK');
       done();
     });
