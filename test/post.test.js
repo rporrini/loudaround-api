@@ -29,10 +29,25 @@ describe('/post socket', function() {
 
     sockets.post().on('open', function() {
       this.send('hello world!');
-      setTimeout(function () {
+      setTimeout(function() {
         done();
       }, 20);
     });
 
+  });
+
+  it('should not broadcast messages to the originating client', function(done) {
+
+    sockets.post().on('message', function(data) {
+
+      done('Received a non wanted message from the socket: ' + data);
+
+    }).on('open', function() {
+
+      this.send('hello world!');
+      setTimeout(function() {
+        done();
+      }, 20);
+    });
   });
 });

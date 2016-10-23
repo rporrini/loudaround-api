@@ -10,11 +10,11 @@ const startOn = port => {
 
   application.ws('/post', (ws, req) => {
     ws.onmessage = message => {
-      sockets.getWss().clients.forEach(client => {
-        if (client.upgradeReq.url === '/post/.websocket') {
-          client.send(message.data)
-        };
-      });
+      sockets.getWss()
+             .clients
+             .filter(client => client !== ws)
+             .filter(client => client.upgradeReq.url === req.url)
+             .forEach(client => client.send(message.data));
     };
   });
 
