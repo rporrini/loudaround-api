@@ -6,6 +6,7 @@ const startOn = port => {
 
   application.ws('/alive', (ws, req) => {
     ws.send('OK');
+    ws.close();
   });
 
   application.ws('/post', (ws, req) => {

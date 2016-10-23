@@ -16,4 +16,12 @@ describe('/alive socket', function() {
     });
 
   });
+
+  it('should close the connection', function(done) {
+
+    sockets.alive().on('close', function() {
+      done();
+    });
+
+  });
 });
