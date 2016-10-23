@@ -1,5 +1,5 @@
 global.expect = require('chai').expect;
-global.sockets = require('./sockets.testdouble.js');
+global.sockets = require('./sockets.sandbox.js');
 
 before(function(){
   sockets.start();
