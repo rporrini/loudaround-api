@@ -18,7 +18,13 @@ const startOn = port => {
 				.getWss()
 				.clients
 				.filter(client => client !== ws)
-				.forEach(client => client.send(message.data));
+				.forEach(client => {
+					try {
+						client.send(message.data);
+					} catch (e) {
+						console.log(e);
+					}
+				});
 		};
 	});
 
