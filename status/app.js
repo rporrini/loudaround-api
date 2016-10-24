@@ -5,7 +5,7 @@ angular.module('status', ['angular-websocket'])
          const endpoint = 'ws://' + $location.host() + ':' + $location.port();
          $interval(() => {
             var dataStream = $websocket(endpoint + '/alive');
-            dataStream.onMessage(function(message) {
+            dataStream.onMessage(message => {
               posts.status = {alive:true};
             });
             dataStream.onError(function() {
@@ -15,7 +15,7 @@ angular.module('status', ['angular-websocket'])
 
          posts.board = '';
          const postSocket = $websocket(endpoint + '/post')
-         postSocket.onMessage(function(message){
+         postSocket.onMessage(message => {
            posts.board += message.data + '\n';
          });
          posts.send = message => {
