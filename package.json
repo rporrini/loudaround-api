@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "scripts": {
     "start": "node src/web.js",
-    "test": "npm run test:runner -- test/unit/*.test.js && npm run test:runner -- test/performance/*.test.js",
+    "test": "npm run -s test:runner -- test/unit/*.test.js",
+    "test:performance": "npm run -s test:runner -- test/performance/*.test.js",
     "test:runner": "./node_modules/.bin/mocha --reporter dot test/_fixture.js"
   },
   "devDependencies": {
