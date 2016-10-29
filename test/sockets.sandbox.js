@@ -1,25 +1,27 @@
 const socket = require('ws');
-const server = require('../src/sockets.js');
+const sockets = require('../src/sockets.js');
 
 const PORT = 6666;
-const openSockets = [];
+const openedSockets = [];
+let server;
 
 const connect = (path) => {
 	const newSocket = socket(`ws://localhost:${PORT}${path}`);
-	openSockets.push(newSocket);
+	openedSockets.push(newSocket);
 	return newSocket;
 };
 const wakeUp = () => {
-	server.startOn(PORT);
+	server = sockets.startOn(PORT);
 };
-const reset = () => {
-	openSockets.forEach(socket => socket.close());
+const shutDown = () => {
+	openedSockets.forEach(socket => socket.close());
+	server.close();
 };
 
 module.exports = {
 	start: wakeUp,
+	stop: shutDown,
 	post: () => connect('/post'),
 	alive: () => connect('/alive'),
 	any: () => connect('/'),
-	dropActiveConnections: reset
 };

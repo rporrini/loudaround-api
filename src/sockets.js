@@ -28,7 +28,7 @@ const startOn = port => {
 		};
 	});
 
-	application.listen(port);
+	return application.listen(port);
 };
 
 module.exports = {

@@ -1,10 +1,10 @@
 global.expect = require('chai').expect;
 global.sockets = require('./sockets.sandbox.js');
 
-before(function () {
+beforeEach(function () {
 	sockets.start();
 });
 
 afterEach(function () {
-	sockets.dropActiveConnections();
+	sockets.stop();
 });
