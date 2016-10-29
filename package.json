@@ -1,17 +1,11 @@
 {
   "name": "loudaround-api",
   "version": "0.0.1",
-  "description": "[![Build Status](https://travis-ci.org/rporrini/loudaround-api.svg?branch=master)](https://travis-ci.org/rporrini/loudaround-api)",
   "scripts": {
     "start": "node src/web.js",
-    "test": "./node_modules/.bin/mocha --reporter dot test/_fixture.js */**/*.test.js"
+    "test": "npm run test:runner -- test/unit/*.test.js && npm run test:runner -- test/performance/*.test.js",
+    "test:runner": "./node_modules/.bin/mocha --reporter dot test/_fixture.js"
   },
-  "main": "src/web.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rporrini/loudaround-api.git"
-  },
-  "homepage": "https://github.com/rporrini/loudaround-api",
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^3.1.0",
