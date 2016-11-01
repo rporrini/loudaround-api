@@ -1,16 +1,16 @@
 const promise = require("bluebird");
-const timeoutAfterTenSeconds = onWhat => {
+const timeoutAfterFiveSeconds = onWhat => {
 	onWhat.timeout(5000);
 };
-const openConnections = (times, callback) => {
+const openConnections = (times, success) => {
 	return [...Array(times).keys()].map(() => {
-		return new promise(callback);
+		return new promise(success);
 	});
 };
 
 describe('websocket server', function () {
 
-	timeoutAfterTenSeconds(this);
+	timeoutAfterFiveSeconds(this);
 
 	it('should handle at least 250 concurrent connections', function () {
 
