@@ -1,33 +1,30 @@
+const promise = require("bluebird");
+const timeoutAfterTenSeconds = onWhat => {
+	onWhat.timeout(5000);
+};
+const openConnections = (times, callback) => {
+	return [...Array(times).keys()].map(() => {
+		return new promise(callback);
+	});
+};
+
 describe('websocket server', function () {
 
-	this.timeout(20000);
+	timeoutAfterTenSeconds(this);
 
-	it('should handle at least one thousand of concurrent connections', function (done) {
+	it('should handle at least 250 concurrent connections', function () {
 
-		const wasReceived = function (data) {
-			this.received = true;
-		};
-		const wasOpened = function (data) {
-			this.opened = true;
+		const howMany = 250;
+		const onMessageReceived = success => {
+			sockets.post().on('message', success);
 		};
 
-		const connections = [];
-		for (let i = 0; i < 1000; i++) {
-			const connection = sockets.post();
-			connection.on('open', wasOpened);
-			connection.on('message', wasReceived);
-			connections.push(connection);
-		}
+		const connections = openConnections(howMany, onMessageReceived);
 
 		sockets.post().on('open', function () {
 			this.send('hello world!');
 		});
 
-		setTimeout(function () {
-			expect(connections.length).to.be.equal(connections.filter(connection => connection.opened).length, 'aaa');
-			expect(connections.length).to.be.equal(connections.filter(connection => connection.received).length);
-			done();
-		}, 19000);
+		return promise.all(connections);
 	});
-
 });
