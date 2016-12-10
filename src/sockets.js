@@ -2,30 +2,29 @@ const express = require('express');
 const application = express();
 const sockets = require('express-ws')(application);
 const path = require('path');
+const connector = require('./socketConnector');
 
 const startOn = port => {
 
 	application.use('/status', express.static(path.join(__dirname, '..', '/status')));
 
 	application.ws('/alive', (ws, req) => {
-		ws.send('OK');
-		ws.close();
+		connector(ws)
+			.send('OK')
+			.close();
 	});
 
 	application.ws('/post', (ws, req) => {
-		ws.on('message', function (message) {
-			sockets
-				.getWss()
-				.clients
-				.filter(client => client !== ws)
-				.forEach(client => {
-					try {
-						client.send(message);
-					} catch (e) {
-						console.log(e);
-					}
-				});
-		});
+
+		connector(ws)
+			.receiving(function (message) {
+				sockets
+					.getWss()
+					.clients
+					.filter(client => client !== ws)
+					.forEach(client => connector(client).send(message));
+			});
+
 	});
 
 	return application.listen(port);

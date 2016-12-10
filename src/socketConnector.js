@@ -9,6 +9,20 @@ module.exports = socket => {
 			return this;
 		},
 
+		send: function (message) {
+			try {
+				socket.send(message);
+			} catch (e) {
+				console.log(e);
+			} finally {
+				return this;
+			}
+		},
+
+		close: () => {
+			socket.close();
+		},
+
 		open: () => new promise((resolve, reject) => {
 			socket
 				.on('open', function () {

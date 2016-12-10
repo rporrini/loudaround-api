@@ -1,4 +1,4 @@
-const connector = require('./socketConnector');
+const connector = require('../../src/socketConnector');
 const event = require('events');
 
 describe('socket', function () {
@@ -53,7 +53,7 @@ describe('socket', function () {
 		return expect(connection).to.eventually.be.rejected;
 	});
 
-	it('should return propagate the error details', function () {
+	it('should propagate the error details', function () {
 
 		const socket = new event();
 
@@ -64,4 +64,35 @@ describe('socket', function () {
 		return expect(connection).to.eventually.be.rejectedWith(error);
 	});
 
+	it('should send a message', function () {
+		const socket = {
+			send: () => {}
+		};
+		const spy = sinon.spy(socket, 'send');
+
+		connector(socket).send('the message');
+
+		return expect(spy.calledWith('the message')).to.be.true;
+	});
+
+	describe('exceptions', function () {
+		let oldConsole = console.log;
+		beforeEach(function () {
+			console.log = () => {};
+		});
+		afterEach(function () {
+			console.log = oldConsole;
+		});
+
+		it('should not be blocking', function () {
+			const socket = {
+				send: () => {}
+			};
+			const spy = sinon.stub(socket, 'send', () => {
+				throw new Error();
+			});
+
+			connector(socket).send('the message');
+		});
+	});
 });

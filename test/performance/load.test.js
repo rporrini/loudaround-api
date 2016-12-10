@@ -1,5 +1,5 @@
 const promise = require('bluebird');
-const connector = require('../unit/socketConnector');
+const connector = require('../../src/socketConnector');
 
 load(10, 100);
 load(100, 1000);
