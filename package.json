@@ -8,15 +8,15 @@
     "test:runner": "./node_modules/.bin/mocha test/_fixture.js"
   },
   "devDependencies": {
-    "bluebird": "^3.4.6",
-    "chai": "^3.5.0",
-    "mocha": "^3.1.0",
-    "sinon": "^1.17.6",
-    "ws": "^1.0.0"
+    "bluebird": "3.4.6",
+    "chai": "3.5.0",
+    "mocha": "3.1.0",
+    "sinon": "1.17.6",
+    "ws": "1.0.0"
   },
   "dependencies": {
-    "express": "^4.14.0",
-    "express-ws": "^2.0.0"
+    "express": "4.14.0",
+    "express-ws": "2.0.0"
   },
   "engines": {
     "node": "6.5.0"

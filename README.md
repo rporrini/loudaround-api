@@ -4,4 +4,8 @@
 
 ## Development
 
-- dependencies: `node v6.#`, `npm`
+- dependencies: `node v6.5`, `npm`
+
+## Bootstrap
+
+- `npm install && npm test && npm run test:performance`
