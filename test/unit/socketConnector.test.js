@@ -1,6 +1,5 @@
 const connector = require('./socketConnector');
 const event = require('events');
-const sinon = require('sinon');
 
 describe('socket', function () {
 

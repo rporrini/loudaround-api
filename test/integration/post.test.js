@@ -1,5 +1,3 @@
-const sinon = require('sinon');
-
 describe('/post socket', function () {
 
 	it('should listen for incoming connections', function () {
