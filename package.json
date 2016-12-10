@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "scripts": {
     "start": "node src/web.js",
-    "test": "npm run -s test:runner -- test/unit/*.test.js",
+    "test": "npm run -s test:runner -- --reporter dot test/unit/*.test.js",
     "test:performance": "npm run -s test:runner -- test/performance/*.test.js",
-    "test:runner": "./node_modules/.bin/mocha --reporter dot test/_fixture.js"
+    "test:runner": "./node_modules/.bin/mocha test/_fixture.js"
   },
   "devDependencies": {
     "bluebird": "^3.4.6",
