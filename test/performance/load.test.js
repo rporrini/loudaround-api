@@ -9,7 +9,7 @@ describe('websocket server', function () {
 
 	timeoutAfterSixtySeconds(this);
 
-	const howManyUsers = 1000;
+	const howManyUsers = 1500;
 	const timeout = 2000;
 
 	it(`should handle at least ${howManyUsers} concurrent connections`, function () {
@@ -49,7 +49,7 @@ describe('websocket server', function () {
 			})
 			.delay(timeout)
 			.then(() => {
-				messages.forEach(message => expect(message.called).to.be.true);
+				expect(messages.filter(message => message.called).length).to.be.equal(messages.length);
 			});
 	});
 });
