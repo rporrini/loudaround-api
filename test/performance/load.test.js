@@ -18,7 +18,7 @@ function load(howManyUsers, timeout) {
 		timeoutAfterSixtySeconds(this);
 
 		const openConnections = () => [...Array(howManyUsers).keys()]
-			.map(() => connector(sockets.post()));
+			.map(() => sockets.post());
 
 		it(`concurrent connections`, function () {
 
@@ -41,7 +41,7 @@ function load(howManyUsers, timeout) {
 
 			return promise
 				.all(connectedSockets)
-				.then(() => connector(sockets.post()).open())
+				.then(() => sockets.post().open())
 				.then(socket => {
 					socket.send('ping');
 				})

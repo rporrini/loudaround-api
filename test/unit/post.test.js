@@ -1,53 +1,65 @@
+const sinon = require('sinon');
+
 describe('/post socket', function () {
 
-	it('should listen for incoming connections', function (done) {
+	it('should listen for incoming connections', function () {
 
-		sockets.post().on('open', function () {
-			done();
-		});
+		return expect(sockets.post().open()).to.be.eventually.fulfilled;
 
 	});
 
-	it('should broadcast messages to every other connected sockets', function (done) {
+	it('should broadcast messages to every other connected sockets', function () {
 
-		sockets.post().on('message', function (data) {
-			expect(data).to.be.equal('hello world!');
-			done();
-		});
+		const spy = sinon.spy();
 
-		sockets.post().on('open', function () {
-			this.send('hello world!');
-		});
+		sockets
+			.post()
+			.receiving(spy)
+			.open();
 
-	});
-
-	it('should broadcast messages only to sockets connected to /post', function (done) {
-
-		sockets.any().on('message', function (data) {
-			done('Received a non wanted message from the socket: ' + data);
-		});
-
-		sockets.post().on('open', function () {
-			this.send('hello world!');
-			setTimeout(function () {
-				done();
-			}, 20);
-		});
+		return sockets
+			.post()
+			.open()
+			.then(socket => {
+				socket.send('hello world');
+			})
+			.delay(10)
+			.then(() => expect(spy.calledWith('hello world')).to.be.true);
 
 	});
 
-	it('should not broadcast messages to the originating client', function (done) {
+	it('should broadcast messages only to sockets connected to /post', function () {
 
-		sockets.post().on('message', function (data) {
+		const spy = sinon.spy();
 
-			done('Received a non wanted message from the socket: ' + data);
+		sockets
+			.any()
+			.receiving(spy)
+			.open();
 
-		}).on('open', function () {
+		return sockets
+			.post()
+			.open()
+			.then(socket => {
+				socket.send('hello world');
+			})
+			.delay(10)
+			.then(() => expect(spy.called).to.be.false);
 
-			this.send('hello world!');
-			setTimeout(function () {
-				done();
-			}, 20);
-		});
+	});
+
+	it('should not broadcast messages to the originating client', function () {
+
+		const spy = sinon.spy();
+
+		return sockets
+			.post()
+			.receiving(spy)
+			.open()
+			.then(socket => {
+				socket.send('a message');
+			})
+			.delay(10)
+			.then(() => expect(spy.called).to.be.false);
 	});
 });

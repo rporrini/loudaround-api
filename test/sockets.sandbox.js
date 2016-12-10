@@ -1,5 +1,6 @@
 const socket = require('ws');
 const sockets = require('../src/sockets.js');
+const connector = require('./unit/socketConnector');
 
 const PORT = 6666;
 const openedSockets = [];
@@ -21,7 +22,7 @@ const shutDown = () => {
 module.exports = {
 	start: wakeUp,
 	stop: shutDown,
-	post: () => connection('/post'),
-	alive: () => connection('/alive'),
-	any: () => connection('/'),
+	post: () => connector(connection('/post')),
+	alive: () => connector(connection('/alive')),
+	any: () => connector(connection('/')),
 };
