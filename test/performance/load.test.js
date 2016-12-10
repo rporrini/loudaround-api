@@ -1,20 +1,11 @@
 const promise = require('bluebird');
 const sinon = require('sinon');
+const open = require('../unit/socket');
 
 load(10, 100);
 load(100, 1000);
 load(1000, 1000);
 load(2000, 2500);
-
-function open(socket) {
-	return new promise((resolve, reject) => {
-		socket
-			.on('open', function () {
-				resolve(this);
-			})
-			.on('error', reject);
-	});
-}
 
 function timeoutAfterSixtySeconds(onWhat) {
 	onWhat.timeout(60000);
