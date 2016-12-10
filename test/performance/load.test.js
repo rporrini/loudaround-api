@@ -1,6 +1,6 @@
 const promise = require('bluebird');
 const sinon = require('sinon');
-const open = require('../unit/socketConnector');
+const connector = require('../unit/socketConnector');
 
 load(10, 100);
 load(100, 1000);
@@ -18,11 +18,13 @@ function load(howManyUsers, timeout) {
 		timeoutAfterSixtySeconds(this);
 
 		const openConnections = () => [...Array(howManyUsers).keys()]
-			.map(() => open(sockets.post()));
+			.map(() => connector(sockets.post()));
 
 		it(`concurrent connections`, function () {
 
-			return promise.all(openConnections());
+			const connections = openConnections().map(c => c.open());
+
+			return expect(promise.all(connections)).to.eventually.be.fulfilled;
 
 		});
 
@@ -31,15 +33,15 @@ function load(howManyUsers, timeout) {
 			const messages = [];
 
 			const connectedSockets = openConnections()
-				.map(socket => socket.then(socket => {
+				.map(connector => {
 					const spy = sinon.spy();
-					socket.on('message', spy);
 					messages.push(spy);
-				}));
+					return connector.receiving(spy).open();
+				});
 
 			return promise
 				.all(connectedSockets)
-				.then(() => open(sockets.post()))
+				.then(() => connector(sockets.post()).open())
 				.then(socket => {
 					socket.send('ping');
 				})
