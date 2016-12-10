@@ -1,6 +1,6 @@
 const promise = require('bluebird');
 const sinon = require('sinon');
-const open = require('../unit/socket');
+const open = require('../unit/socketConnector');
 
 load(10, 100);
 load(100, 1000);

@@ -1,4 +1,4 @@
-const connector = require('./socket');
+const connector = require('./socketConnector');
 const event = require('events');
 
 describe('socket', function () {
