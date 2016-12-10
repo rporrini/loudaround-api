@@ -6,7 +6,7 @@ const openedSockets = [];
 let server;
 
 const connect = (path) => {
-	const newSocket = socket(`ws://localhost:${PORT}${path}`);
+	const newSocket = new socket(`ws://localhost:${PORT}${path}`);
 	openedSockets.push(newSocket);
 	return newSocket;
 };

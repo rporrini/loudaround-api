@@ -1,30 +1,55 @@
-const promise = require("bluebird");
-const timeoutAfterFiveSeconds = onWhat => {
-	onWhat.timeout(5000);
-};
-const openConnections = (times, success) => {
-	return [...Array(times).keys()].map(() => {
-		return new promise(success);
-	});
+const promise = require('bluebird');
+const sinon = require('sinon');
+
+const timeoutAfterSixtySeconds = onWhat => {
+	onWhat.timeout(60000);
 };
 
 describe('websocket server', function () {
 
-	timeoutAfterFiveSeconds(this);
+	timeoutAfterSixtySeconds(this);
 
-	it('should handle at least 250 concurrent connections', function () {
+	const howManyUsers = 1000;
+	const timeout = 2000;
 
-		const howMany = 250;
-		const onMessageReceived = success => {
-			sockets.post().on('message', success);
-		};
+	it(`should handle at least ${howManyUsers} concurrent connections`, function () {
 
-		const connections = openConnections(howMany, onMessageReceived);
-
-		sockets.post().on('open', function () {
-			this.send('hello world!');
+		const connectedSockets = [...Array(howManyUsers).keys()].map(() => {
+			return new promise((resolve, reject) => {
+				sockets.post()
+					.on('open', resolve)
+					.on('error', reject);
+			});
 		});
 
-		return promise.all(connections);
+		return promise.all(connectedSockets);
+	});
+
+	it(`should deliver messages to at least ${howManyUsers} connected users in at least ${timeout} ms`, function () {
+
+		const messages = [];
+
+		const connectedSockets = [...Array(howManyUsers).keys()].map(() => {
+			return new promise((resolve, reject) => {
+				const spy = sinon.spy();
+				sockets.post()
+					.on('open', resolve)
+					.on('error', reject)
+					.on('message', spy);
+				messages.push(spy);
+			});
+		});
+
+		return promise
+			.all(connectedSockets)
+			.then(() => {
+				sockets.post().on('open', function () {
+					this.send('ping');
+				});
+			})
+			.delay(timeout)
+			.then(() => {
+				messages.forEach(message => expect(message.called).to.be.true);
+			});
 	});
 });
