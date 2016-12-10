@@ -5,7 +5,7 @@ const PORT = 6666;
 const openedSockets = [];
 let server;
 
-const connect = (path) => {
+const connection = (path) => {
 	const newSocket = new socket(`ws://localhost:${PORT}${path}`);
 	openedSockets.push(newSocket);
 	return newSocket;
@@ -21,7 +21,7 @@ const shutDown = () => {
 module.exports = {
 	start: wakeUp,
 	stop: shutDown,
-	post: () => connect('/post'),
-	alive: () => connect('/alive'),
-	any: () => connect('/'),
+	post: () => connection('/post'),
+	alive: () => connection('/alive'),
+	any: () => connection('/'),
 };

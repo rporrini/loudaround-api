@@ -4,7 +4,17 @@ const sinon = require('sinon');
 load(10, 100);
 load(100, 1000);
 load(1000, 1000);
-load(2000, 2000);
+load(2000, 2500);
+
+function open(socket) {
+	return new promise((resolve, reject) => {
+		socket
+			.on('open', function () {
+				resolve(this);
+			})
+			.on('error', reject);
+	});
+}
 
 function timeoutAfterSixtySeconds(onWhat) {
 	onWhat.timeout(60000);
@@ -16,40 +26,31 @@ function load(howManyUsers, timeout) {
 
 		timeoutAfterSixtySeconds(this);
 
+		const openConnections = () => [...Array(howManyUsers).keys()]
+			.map(() => open(sockets.post()));
+
 		it(`concurrent connections`, function () {
 
-			const connectedSockets = [...Array(howManyUsers).keys()].map(() => {
-				return new promise((resolve, reject) => {
-					sockets.post()
-						.on('open', resolve)
-						.on('error', reject);
-				});
-			});
+			return promise.all(openConnections());
 
-			return promise.all(connectedSockets);
 		});
 
 		it(`message delivery`, function () {
 
 			const messages = [];
 
-			const connectedSockets = [...Array(howManyUsers).keys()].map(() => {
-				return new promise((resolve, reject) => {
+			const connectedSockets = openConnections()
+				.map(socket => socket.then(socket => {
 					const spy = sinon.spy();
-					sockets.post()
-						.on('open', resolve)
-						.on('error', reject)
-						.on('message', spy);
+					socket.on('message', spy);
 					messages.push(spy);
-				});
-			});
+				}));
 
 			return promise
 				.all(connectedSockets)
-				.then(() => {
-					sockets.post().on('open', function () {
-						this.send('ping');
-					});
+				.then(() => open(sockets.post()))
+				.then(socket => {
+					socket.send('ping');
 				})
 				.delay(timeout)
 				.then(() => {
