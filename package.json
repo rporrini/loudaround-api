@@ -2,6 +2,7 @@
   "name": "loudaround-api",
   "version": "0.0.1",
   "scripts": {
+    "bootstrap": "rm -rf node_modules && npm install && npm test && npm run test:performance",
     "start": "node src/web.js",
     "test": "npm run -s test:runner -- --reporter dot test/unit/*.test.js",
     "test:performance": "npm run -s test:runner -- test/performance/*.test.js",

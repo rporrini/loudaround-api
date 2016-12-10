@@ -5,7 +5,4 @@
 ## Development
 
 - dependencies: `node v6.5`, `npm`
-
-## Bootstrap
-
-- `npm install && npm test && npm run test:performance`
+- setup: `npm run bootstrap`
