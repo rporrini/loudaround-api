@@ -13,19 +13,19 @@ const startOn = port => {
 	});
 
 	application.ws('/post', (ws, req) => {
-		ws.onmessage = message => {
+		ws.on('message', function (message) {
 			sockets
 				.getWss()
 				.clients
 				.filter(client => client !== ws)
 				.forEach(client => {
 					try {
-						client.send(message.data);
+						client.send(message);
 					} catch (e) {
 						console.log(e);
 					}
 				});
-		};
+		});
 	});
 
 	return application.listen(port);
