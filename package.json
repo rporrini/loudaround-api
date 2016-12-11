@@ -4,7 +4,7 @@
   "scripts": {
     "bootstrap": "rm -rf node_modules && npm install && npm test && npm run test:performance",
     "start": "node src/web.js",
-    "test": "npm run -s test:runner -- --reporter dot test/unit/*.test.js test/integration/*.test.js",
+    "test": "npm run -s test:runner -- test/unit/*.test.js test/integration/*.test.js",
     "test:performance": "npm run -s test:runner -- test/performance/*.test.js",
     "test:runner": "nyc mocha test/_fixture.js"
   },

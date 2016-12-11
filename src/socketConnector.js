@@ -5,13 +5,13 @@ module.exports = socket => {
 	return {
 
 		receiving: function (callback) {
-			socket.on('message', callback);
+			this.socket().on('message', callback);
 			return this;
 		},
 
 		send: function (message) {
 			try {
-				socket.send(message);
+				this.socket().send(message);
 			} catch (e) {
 				console.log(e);
 			} finally {
@@ -19,8 +19,8 @@ module.exports = socket => {
 			}
 		},
 
-		close: () => {
-			socket.close();
+		close: function () {
+			this.socket().close();
 		},
 
 		open: () => new promise((resolve, reject) => {
@@ -31,6 +31,16 @@ module.exports = socket => {
 				.on('error', function (error) {
 					reject(error);
 				});
-		})
+		}),
+
+		requested: function (regex) {
+			return this.socket().upgradeReq.url.match(regex);
+		},
+
+		equals: function (connector) {
+			return this.socket() === connector.socket();
+		},
+
+		socket: () => socket
 	};
 };
