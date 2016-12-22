@@ -75,25 +75,6 @@ describe('socket', function () {
 		return expect(spy.calledWith('the message')).to.be.true;
 	});
 
-	it('should not be equal to an another connector if they wrap a DIFFERENT instance', function () {
-
-		return expect(connector({}).equals(connector({}))).to.be.false;
-	});
-
-	it('should be equal to an another connector if they wrap the SAME instance', function () {
-
-		const socket = {};
-
-		return expect(connector(socket).equals(connector(socket))).to.be.true;
-	});
-
-	it('should be equal to itself', function () {
-
-		const c = connector({});
-
-		return expect(c.equals(c)).to.be.true;
-	});
-
 	it('exceptions should not be blocking', function () {
 
 		let oldConsole = console.log;

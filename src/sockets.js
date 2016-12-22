@@ -23,7 +23,7 @@ const startOn = port => {
 					.clients
 					.filter(client => client !== ws)
 					.map(c => connector(c))
-					.forEach(aaa => aaa.send(message));
+					.forEach(c => c.send(message));
 			});
 
 	});

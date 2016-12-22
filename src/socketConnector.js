@@ -33,14 +33,6 @@ module.exports = socket => {
 				});
 		}),
 
-		requested: function (regex) {
-			return this.socket().upgradeReq.url.match(regex);
-		},
-
-		equals: function (connector) {
-			return this.socket() === connector.socket();
-		},
-
 		socket: () => socket
 	};
 };
