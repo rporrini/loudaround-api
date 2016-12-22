@@ -4,40 +4,28 @@ const sockets = require('express-ws')(application);
 const path = require('path');
 const connector = require('./socketConnector');
 
-const alive = (socket) => {
-	return {
-		process: () => socket.send('OK').close()
-	};
-};
-
-const broadcast = (socket, clients) => {
-	return {
-		process: () => socket.receiving(function (message) {
-			clients
-				.filter(client => !client.equals(socket))
-				.forEach(client => client.send(message));
-		})
-	};
-};
-
 const startOn = port => {
 
 	application.use('/status', express.static(path.join(__dirname, '..', '/status')));
 
 	application.ws('/alive', (ws, req) => {
-		const socket = connector(ws);
-		alive(socket).process();
+		connector(ws)
+			.send('OK')
+			.close();
 	});
 
 	application.ws('/post', (ws, req) => {
-		const socket = connector(ws);
-		const clients = sockets
-			.getWss()
-			.clients
-			.map(connector)
-			.filter(c => c.requested(/\/post/));
 
-		broadcast(socket, clients).process();
+		connector(ws)
+			.receiving(function (message) {
+				sockets
+					.getWss()
+					.clients
+					.filter(client => client !== ws)
+					.map(c => connector(c))
+					.forEach(aaa => aaa.send(message));
+			});
+
 	});
 
 	return application.listen(port);

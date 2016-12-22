@@ -21,7 +21,7 @@ describe('/post socket', function () {
 			.then(socket => {
 				socket.send('hello world');
 			})
-			.delay(10)
+			.delay(50)
 			.then(() => expect(spy.calledWith('hello world')).to.be.true);
 
 	});
@@ -41,7 +41,7 @@ describe('/post socket', function () {
 			.then(socket => {
 				socket.send('hello world');
 			})
-			.delay(10)
+			.delay(50)
 			.then(() => expect(spy.called).to.be.false);
 
 	});
@@ -57,7 +57,7 @@ describe('/post socket', function () {
 			.then(socket => {
 				socket.send('a message');
 			})
-			.delay(10)
+			.delay(50)
 			.then(() => expect(spy.called).to.be.false);
 	});
 });
