@@ -4,6 +4,6 @@ module.exports = sockets => {
 	return socket => {
 		return sockets
 			.filter(client => client !== socket)
-			.map(s => connector(s));
+			.map(client => connector(client));
 	};
 };
