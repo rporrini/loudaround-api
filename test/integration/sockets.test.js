@@ -1,8 +1,8 @@
-describe('sockets application', function () {
+describe('application', function () {
 
 	it('should not allow the connection of a socket to an arbitrary url', function () {
 
-		const connection = sockets.any()
+		const connection = application.any()
 			.open()
 			.then(socket => socket.send('F**k ddos'));
 

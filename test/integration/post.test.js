@@ -2,7 +2,7 @@ describe('/post socket', function () {
 
 	it('should listen for incoming connections', function () {
 
-		return expect(sockets.post().open()).to.be.eventually.fulfilled;
+		return expect(application.post().open()).to.be.eventually.fulfilled;
 
 	});
 
@@ -10,12 +10,12 @@ describe('/post socket', function () {
 
 		const spy = sinon.spy();
 
-		sockets
+		application
 			.post()
 			.receiving(spy)
 			.open();
 
-		return sockets
+		return application
 			.post()
 			.open()
 			.then(socket => {
@@ -30,12 +30,12 @@ describe('/post socket', function () {
 
 		const spy = sinon.spy();
 
-		sockets
+		application
 			.any()
 			.receiving(spy)
 			.open();
 
-		return sockets
+		return application
 			.post()
 			.open()
 			.then(socket => {
@@ -50,7 +50,7 @@ describe('/post socket', function () {
 
 		const spy = sinon.spy();
 
-		return sockets
+		return application
 			.post()
 			.receiving(spy)
 			.open()

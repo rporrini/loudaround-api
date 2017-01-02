@@ -4,9 +4,9 @@ const application = express();
 const sockets = require('express-ws')(application);
 const clients = sockets.getWss().clients;
 
-const alive = require('./alive.js');
-const post = require('./post.js');
-const all = require('./all.js');
+const alive = require('./alive');
+const post = require('./post');
+const all = require('./all');
 
 module.exports = {
 	startOn: port => application

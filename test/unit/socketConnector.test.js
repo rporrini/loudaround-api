@@ -1,7 +1,7 @@
 const connector = require('../../src/socketConnector');
 const event = require('events');
 
-describe('socket', function () {
+describe('socketConnector', function () {
 
 	it('should return a promised opened connection', function () {
 

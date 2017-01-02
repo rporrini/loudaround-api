@@ -4,12 +4,12 @@ chai.use(chaiAsPromised);
 
 global.expect = chai.expect;
 global.sinon = require('sinon');
-global.sockets = require('./sockets.sandbox.js');
+global.application = require('./application.sandbox.js');
 
 beforeEach(function () {
-	sockets.start();
+	application.start();
 });
 
 afterEach(function () {
-	sockets.stop();
+	application.stop();
 });

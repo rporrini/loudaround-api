@@ -1,1 +1,1 @@
-require('./sockets').startOn(process.env.PORT || 3000);
+require('./application').startOn(process.env.PORT || 3000);
