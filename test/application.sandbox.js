@@ -1,5 +1,5 @@
 const socket = require('ws');
-const sockets = require('../src/application');
+const application = require('../src/application');
 const connector = require('../src/socketConnector');
 
 const PORT = 6666;
@@ -12,7 +12,7 @@ const connection = (path) => {
 	return newSocket;
 };
 const wakeUp = () => {
-	server = sockets.startOn(PORT);
+	server = application.startOn(PORT);
 };
 const shutDown = () => {
 	openedSockets.forEach(socket => socket.close());
