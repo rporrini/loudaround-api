@@ -2,9 +2,11 @@
   "name": "loudaround-api",
   "version": "0.0.1",
   "scripts": {
-    "bootstrap": "rm -rf node_modules && npm install && npm test && npm run test:performance",
+    "bootstrap": "rm -rf node_modules && npm install && npm run -s test:all",
     "start": "node src/web.js",
-    "test": "npm run -s test:runner -- test/unit/*.test.js test/integration/*.test.js",
+    "test": "watch 'npm run test:ci' src test --wait=0.5",
+    "test:all" : "npm run test:ci && npm run test:performance",
+    "test:ci": "npm run -s test:runner -- test/unit/*.test.js test/integration/*.test.js",
     "test:performance": "npm run -s test:runner -- test/performance/*.test.js",
     "test:runner": "nyc mocha test/_fixture.js"
   },
@@ -14,6 +16,7 @@
     "mocha": "3.1.0",
     "nyc": "10.0.0",
     "sinon": "1.17.6",
+    "watch": "1.0.1",
     "ws": "1.0.0"
   },
   "dependencies": {
