@@ -10,7 +10,7 @@ const all = require('./all');
 
 module.exports = {
 	startOn: port => application
-		.use('/status', express.static(path.join(__dirname, '..', '/status')))
+		.use('/status', express.static(path.join(__dirname, '..', 'status')))
 		.ws('/alive', alive())
 		.ws('/post', post(all(clients)))
 		.listen(port)
