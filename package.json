@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "scripts": {
     "start": "node src/web.js",
-    "test": "watch 'npm run test:verification' src test --wait=0.5",
+    "test": "watch 'npm run -s test:verification' src test --wait=0.5",
     "bootstrap": "rm -rf node_modules && npm install && npm run -s test:all",
-    "test:all" : "npm run test:verification && npm run test:performance",
+    "test:all" : "npm run -s test:verification && npm run -s test:performance",
     "test:verification": "npm run -s test:runner -- test/verification/*.test.js",
     "test:performance": "npm run -s test:runner -- test/performance/*.test.js",
     "test:runner": "nyc mocha test/_fixture.js"
