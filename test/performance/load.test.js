@@ -10,6 +10,12 @@ function timeoutAfterSixtySeconds(onWhat) {
 	onWhat.timeout(60000);
 }
 
+function message() {
+	return JSON.stringify({
+		text: 'hello world'
+	});
+}
+
 function load(howManyUsers, timeout) {
 
 	describe(`websocket server - ${howManyUsers} connections - ${timeout} ms timeout`, function () {
@@ -42,7 +48,7 @@ function load(howManyUsers, timeout) {
 				.all(connectedSockets)
 				.then(() => application.post().open())
 				.then(socket => {
-					socket.send('ping');
+					socket.send(message());
 				})
 				.delay(timeout)
 				.then(() => {
