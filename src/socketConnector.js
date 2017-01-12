@@ -5,13 +5,13 @@ module.exports = socket => {
 	return {
 
 		receiving: function (callback) {
-			this.socket().on('message', callback);
+			socket.on('message', callback);
 			return this;
 		},
 
 		send: function (message) {
 			try {
-				this.socket().send(message);
+				socket.send(message);
 			} catch (e) {
 				console.log(e);
 			} finally {
@@ -20,7 +20,7 @@ module.exports = socket => {
 		},
 
 		close: function () {
-			this.socket().close();
+			socket.close();
 		},
 
 		open: () => new promise((resolve, reject) => {

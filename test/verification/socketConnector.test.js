@@ -18,11 +18,7 @@ describe('socketConnector', function () {
 		const socket = new event();
 		const spy = sinon.spy();
 
-		connector(socket)
-			.receiving(spy)
-			.open();
-
-		socket.emit('open');
+		connector(socket).receiving(spy);
 		socket.emit('message', 'the message');
 
 		return expect(spy.called).to.be.true;
@@ -33,11 +29,7 @@ describe('socketConnector', function () {
 		const socket = new event();
 		const spy = sinon.spy();
 
-		connector(socket)
-			.receiving(spy)
-			.open();
-
-		socket.emit('open');
+		connector(socket).receiving(spy);
 		socket.emit('message', 'the message');
 
 		return expect(spy.calledWith('the message'));
