@@ -22,11 +22,15 @@ angular.module('status', ['angular-websocket'])
 		posts.board = '';
 		const postSocket = $websocket(endpoint + '/post');
 		postSocket.onMessage(message => {
-			posts.board += message.data + '\n';
+			const parsed = JSON.parse(message.data);
+			posts.board += parsed.position + ': ' + parsed.text + '\n';
 		});
-		posts.send = message => {
-			postSocket.send(message);
-			posts.board += message + '\n';
+		posts.send = (text, position) => {
+			postSocket.send({
+				position,
+				text
+			});
+			posts.board += position + ': ' + text + '\n';
 			posts.message = '';
 		};
 	});
