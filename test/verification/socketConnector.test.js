@@ -57,31 +57,21 @@ describe('socketConnector', function () {
 	});
 
 	it('should send a message', function () {
-		const socket = {
-			send: () => {}
-		};
-		const spy = sinon.spy(socket, 'send');
+		const send = sinon.spy();
 
-		connector(socket).send('the message');
+		connector({
+			send
+		}).send('the message');
 
-		return expect(spy.calledWith('the message')).to.be.true;
+		return expect(send.calledWith('the message')).to.be.true;
 	});
 
 	it('exceptions should not be blocking', function () {
 
-		let oldConsole = console.log;
+		const send = sinon.stub().throws(new Error("Ignore me, I was thrown for testing purposes."));
 
-		const socket = {
-			send: () => {}
-		};
-		const spy = sinon.stub(socket, 'send', () => {
-			throw new Error();
-		});
-
-		console.log = () => {};
-
-		connector(socket).send('the message');
-
-		console.log = oldConsole;
+		connector({
+			send
+		}).send('the message');
 	});
 });

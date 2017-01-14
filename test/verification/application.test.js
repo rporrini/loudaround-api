@@ -1,6 +1,6 @@
 describe('application', function () {
 
-	it('should not allow the connection of a socket to an arbitrary url', function () {
+	it('should reject the connection to any arbitrary url', function () {
 
 		const connection = application.any()
 			.open()
