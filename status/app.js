@@ -1,5 +1,6 @@
-angular.module('status', ['angular-websocket'])
-	.controller('PostsController', function ($websocket, $interval, $location) {
+angular.module('status', ['angular-websocket', 'ngMap'])
+	.controller('PostsController', function ($websocket, $interval, $location, NgMap) {
+
 		var posts = this;
 		posts.status = {
 			pending: true
@@ -33,4 +34,20 @@ angular.module('status', ['angular-websocket'])
 			posts.board += position + ': ' + text + '\n';
 			posts.message = '';
 		};
+
+		NgMap.getMap().then(function (map) {
+			let marker = new google.maps.Marker();
+			map.addListener('click', function (e) {
+				marker.setMap(null);
+				marker = new google.maps.Marker({
+					position: e.latLng,
+					map: map
+				});
+				var info = new google.maps.InfoWindow({
+					content: `<h5>${e.latLng}</h5>`
+				});
+				info.open(map, marker);
+				posts.position = e.latLng;
+			});
+		});
 	});
