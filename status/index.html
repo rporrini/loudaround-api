@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app='status'>
+<html>
 
 <head>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
@@ -9,17 +9,10 @@
   <script src="app.js"></script>
 </head>
 
-<body>
+<body ng-app='status'>
   <alive></alive>
-  <div ng-controller="PostsController as posts">
-    <textarea readonly style="margin-top: 20px; margin-bottom:20px; width: 55%; height: 200px;" ng-model="posts.board"></textarea>
-    <div>Text</div>
-    <input type="text" ng-model="posts.message" style="width:55%; height: 30px; margin-bottom:10px" />
-    <div>Position</div>
-    <input type="text" ng-model="posts.position" style="width:55%; height: 30px; margin-bottom:10px" /></br>
-    <button style="margin-bottom:10px" ng-click="posts.send(posts.message, posts.position)" style="height: 36px;">Send</button>
-    <ng-map style="width:55%" center="[46.000558, 8.745489]"></ng-map>
-  </div>
+  <chat style="float:left; width:45%; margin-left:25px" map="ping"></chat>
+  <chat style="float:right; width:45%; margin-right:35px" map="pong"></chat>
 </body>
 
 </html>

@@ -23,27 +23,36 @@ angular.module('status', ['angular-websocket', 'ngMap'])
 			});
 		}, 5000);
 	})
-	.controller('PostsController', function ($websocket, $location, NgMap) {
+	.component('chat', {
+		templateUrl: 'chat.html',
+		controller: 'ChatController',
+		bindings: {
+			map: '@'
+		}
+	})
+	.controller('ChatController', function ($websocket, $location, NgMap) {
 
 		var posts = this;
 		posts.board = '';
-
 		const endpoint = 'ws://' + $location.host() + ':' + $location.port();
 		const postSocket = $websocket(endpoint + '/post');
 		postSocket.onMessage(message => {
 			const parsed = JSON.parse(message.data);
-			posts.board += parsed.position + ': ' + parsed.text + '\n';
+			posts.board += `(${parsed.position.lat}, ${parsed.position.long}): ${parsed.text} \n`;
 		});
-		posts.send = (text, position) => {
+		posts.send = (text, pos) => {
 			postSocket.send({
-				position,
+				position: {
+					lat: pos.lat(),
+					long: pos.lng()
+				},
 				text
 			});
-			posts.board += position + ': ' + text + '\n';
+			posts.board += pos + ': ' + text + '\n';
 			posts.message = '';
 		};
 
-		NgMap.getMap().then(function (map) {
+		NgMap.getMap(posts.map).then(function (map) {
 			let marker = new google.maps.Marker();
 			map.addListener('click', function (e) {
 				marker.setMap(null);
