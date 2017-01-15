@@ -1,26 +1,34 @@
 angular.module('status', ['angular-websocket', 'ngMap'])
-	.controller('PostsController', function ($websocket, $interval, $location, NgMap) {
-
-		var posts = this;
-		posts.status = {
+	.component('alive', {
+		templateUrl: 'alive.html',
+		controller: 'AliveController'
+	})
+	.controller('AliveController', function ($websocket, $interval, $location) {
+		var alive = this;
+		alive.status = {
 			pending: true
 		};
 		const endpoint = 'ws://' + $location.host() + ':' + $location.port();
 		$interval(() => {
 			var dataStream = $websocket(endpoint + '/alive');
 			dataStream.onMessage(message => {
-				posts.status = {
+				alive.status = {
 					alive: true
 				};
 			});
 			dataStream.onError(function () {
-				posts.status = {
+				alive.status = {
 					ko: true
 				};
 			});
 		}, 5000);
+	})
+	.controller('PostsController', function ($websocket, $location, NgMap) {
 
+		var posts = this;
 		posts.board = '';
+
+		const endpoint = 'ws://' + $location.host() + ':' + $location.port();
 		const postSocket = $websocket(endpoint + '/post');
 		postSocket.onMessage(message => {
 			const parsed = JSON.parse(message.data);
