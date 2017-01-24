@@ -29,4 +29,26 @@ describe('localizedConnector', function () {
 
 		return expect(socket.position).to.be.equal('the position');
 	});
+
+	it('should forward messages', function () {
+		const send = sinon.spy();
+
+		connector({
+			send
+		}).send(message('the message'));
+
+		return expect(send.calledWith(message('the message'))).to.be.true;
+	});
+
+	xit('should not forward messages if they are sent too far from the last tracked position', function () {
+		const send = sinon.spy();
+		const socket = new event();
+		socket.send = send;
+		const oneKilometer = 1000;
+		const c = connector(socketConnector(socket), oneKilometer);
+		socket.emit('message', message('a position'));
+		c.send(message('another position'));
+
+		return expect(send.called).to.be.false;
+	});
 });
