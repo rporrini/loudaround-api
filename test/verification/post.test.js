@@ -13,7 +13,8 @@ describe('/post socket', function () {
 		application
 			.post()
 			.receiving(spy)
-			.open();
+			.open()
+			.then(socket => socket.send(message()));
 
 		return application
 			.post()

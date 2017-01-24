@@ -38,13 +38,13 @@ angular.module('status', ['angular-websocket', 'ngMap'])
 		const postSocket = $websocket(endpoint + '/post');
 		postSocket.onMessage(message => {
 			const parsed = JSON.parse(message.data);
-			posts.board += `(${parsed.position.lat}, ${parsed.position.long}): ${parsed.text} \n`;
+			posts.board += `(${parsed.position.lat}, ${parsed.position.lon}): ${parsed.text} \n`;
 		});
 		posts.send = (text, pos) => {
 			postSocket.send({
 				position: {
 					lat: pos.lat(),
-					long: pos.lng()
+					lon: pos.lng()
 				},
 				text
 			});

@@ -14,9 +14,9 @@ const connect = handler => client => {
 };
 
 module.exports = {
-	startOn: port => application
+	startOn: (port, range) => application
 		.use('/status', express.static(path.join(__dirname, '..', 'status')))
 		.ws('/alive', connect(alive()))
-		.ws('/post', connect(post(all(clients))))
+		.ws('/post', connect(post(all(clients), range)))
 		.listen(port)
 };

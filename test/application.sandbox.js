@@ -3,6 +3,7 @@ const application = require('../src/application');
 const connector = require('../src/socketConnector');
 
 const PORT = 6666;
+const RANGE = 100000;
 const openedSockets = [];
 let server;
 
@@ -12,7 +13,7 @@ const connection = (path) => {
 	return newSocket;
 };
 const wakeUp = () => {
-	server = application.startOn(PORT);
+	server = application.startOn(PORT, RANGE);
 };
 const shutDown = () => {
 	openedSockets.forEach(socket => socket.close());

@@ -25,29 +25,43 @@ describe('localizedConnector', function () {
 		const socket = new event();
 
 		connector(socketConnector(socket)).receiving(() => {});
-		socket.emit('message', message('the position'));
+		socket.emit('message', message());
 
-		return expect(socket.position).to.be.equal('the position');
+		return expect(socket.position).to.be.eql(JSON.parse(message()).position);
 	});
 
-	it('should forward messages', function () {
+	it('should not forward messages if the latest position is unknown', function () {
 		const send = sinon.spy();
 
-		connector({
+		connector(socketConnector({
 			send
-		}).send(message('the message'));
+		})).send(message());
 
-		return expect(send.calledWith(message('the message'))).to.be.true;
+		return expect(send.called).to.be.false;
 	});
 
-	xit('should not forward messages if they are sent too far from the last tracked position', function () {
+	it('should forward messages if they are sent within the last tracked position', function () {
 		const send = sinon.spy();
 		const socket = new event();
 		socket.send = send;
-		const oneKilometer = 1000;
-		const c = connector(socketConnector(socket), oneKilometer);
-		socket.emit('message', message('a position'));
-		c.send(message('another position'));
+
+		const c = connector(socketConnector(socket), 1);
+		c.receiving(() => {});
+		socket.emit('message', message());
+		c.send(message());
+
+		return expect(send.called).to.be.true;
+	});
+
+	it('should not forward messages if they are too far from the last tracked position', function () {
+		const send = sinon.spy();
+		const socket = new event();
+		socket.send = send;
+
+		const c = connector(socketConnector(socket), 0);
+		c.receiving(() => {});
+		socket.emit('message', message());
+		c.send(message());
 
 		return expect(send.called).to.be.false;
 	});
