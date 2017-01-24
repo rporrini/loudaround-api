@@ -1,7 +1,3 @@
-const message = JSON.stringify({
-	text: 'hello world'
-});
-
 describe('/post socket', function () {
 
 	it('should listen for incoming connections', function () {
@@ -22,11 +18,9 @@ describe('/post socket', function () {
 		return application
 			.post()
 			.open()
-			.then(socket => {
-				socket.send(message);
-			})
+			.then(socket => socket.send(message()))
 			.delay(50)
-			.then(() => expect(spy.calledWith(message)).to.be.true);
+			.then(() => expect(spy.calledWith(message())).to.be.true);
 
 	});
 
@@ -42,9 +36,7 @@ describe('/post socket', function () {
 		return application
 			.post()
 			.open()
-			.then(socket => {
-				socket.send(message);
-			})
+			.then(socket => socket.send(message()))
 			.delay(50)
 			.then(() => expect(spy.called).to.be.false);
 
@@ -58,9 +50,7 @@ describe('/post socket', function () {
 			.post()
 			.receiving(spy)
 			.open()
-			.then(socket => {
-				socket.send(message);
-			})
+			.then(socket => socket.send(message()))
 			.delay(50)
 			.then(() => expect(spy.called).to.be.false);
 	});

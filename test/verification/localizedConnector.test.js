@@ -16,7 +16,7 @@ describe('localizedConnector', function () {
 		const spy = sinon.spy();
 
 		connector(socketConnector(socket)).receiving(spy);
-		socket.emit('message', JSON.stringify({}));
+		socket.emit('message', message());
 
 		return expect(spy.called).to.be.true;
 	});
@@ -25,9 +25,7 @@ describe('localizedConnector', function () {
 		const socket = new event();
 
 		connector(socketConnector(socket)).receiving(() => {});
-		socket.emit('message', JSON.stringify({
-			position: 'the position'
-		}));
+		socket.emit('message', message('the position'));
 
 		return expect(socket.position).to.be.equal('the position');
 	});
