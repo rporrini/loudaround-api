@@ -6,7 +6,7 @@ const clients = sockets.getWss().clients;
 
 const alive = require('./alive');
 const post = require('./post');
-const connector = require('./socketConnector');
+const connector = require('./connector');
 
 const connect = handler => client => {
 	handler(connector(client));

@@ -1,6 +1,6 @@
 const socket = require('ws');
 const application = require('../src/application');
-const connector = require('../src/socketConnector');
+const connector = require('../src/connector');
 
 const PORT = 6666;
 const openedSockets = [];

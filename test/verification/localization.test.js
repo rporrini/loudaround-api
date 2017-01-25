@@ -1,8 +1,8 @@
-const connector = require('../../src/localizedConnector');
-const socketConnector = require('../../src/socketConnector');
+const connector = require('../../src/localization');
+const socketConnector = require('../../src/connector');
 const event = require('events');
 
-describe('localizedConnector', function () {
+describe('localization', function () {
 
 	it('should decorate an object', function () {
 		const toBeDecorated = {

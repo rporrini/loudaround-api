@@ -1,7 +1,7 @@
-const localization = require('./localizedConnector');
+const localizedWithin = require('./localization');
 const application = require('./application');
 
 const port = process.env.PORT || 3000;
-const range = 500;
+const fiveHundredMeters = 500;
 
-application(localization(range)).startOn(port);
+application(localizedWithin(fiveHundredMeters)).startOn(port);

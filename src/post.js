@@ -1,4 +1,4 @@
-const connector = require('./socketConnector');
+const connector = require('./connector');
 
 module.exports = (sockets, localized) => requestConnector => {
 	localized(requestConnector)
