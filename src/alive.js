@@ -1,3 +1,3 @@
-module.exports = () => socket => {
-	socket.send('OK').close();
+module.exports = () => connector => {
+	connector.send('OK').close();
 };

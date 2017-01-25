@@ -1,6 +1,12 @@
-module.exports = (clients, localized) => connector => {
-	localized(connector)
+const connector = require('./socketConnector');
+
+module.exports = (sockets, localized) => requestConnector => {
+	localized(requestConnector)
 		.receiving(message => {
-			clients(connector.socket()).forEach(client => localized(client).send(message));
+			sockets
+				.filter(socket => socket !== requestConnector.socket())
+				.map(connector)
+				.map(localized)
+				.forEach(connector => connector.send(message));
 		});
 };

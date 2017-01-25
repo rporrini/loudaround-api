@@ -6,7 +6,6 @@ const clients = sockets.getWss().clients;
 
 const alive = require('./alive');
 const post = require('./post');
-const all = require('./all');
 const connector = require('./socketConnector');
 
 const connect = handler => client => {
@@ -18,7 +17,7 @@ module.exports = localization => {
 		startOn: port => application
 			.use('/status', express.static(path.join(__dirname, '..', 'status')))
 			.ws('/alive', connect(alive()))
-			.ws('/post', connect(post(all(clients), localization)))
+			.ws('/post', connect(post(clients, localization)))
 			.listen(port)
 	};
 };
