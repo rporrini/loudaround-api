@@ -13,10 +13,12 @@ const connect = handler => client => {
 	handler(connector(client));
 };
 
-module.exports = {
-	startOn: (port, range) => application
-		.use('/status', express.static(path.join(__dirname, '..', 'status')))
-		.ws('/alive', connect(alive()))
-		.ws('/post', connect(post(all(clients), range)))
-		.listen(port)
+module.exports = localization => {
+	return {
+		startOn: port => application
+			.use('/status', express.static(path.join(__dirname, '..', 'status')))
+			.ws('/alive', connect(alive()))
+			.ws('/post', connect(post(all(clients), localization)))
+			.listen(port)
+	};
 };

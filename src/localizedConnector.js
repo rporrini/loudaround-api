@@ -4,7 +4,7 @@ const asGeo = position => {
 	return new geo(position.lat, position.lon);
 };
 
-module.exports = function (connector, range) {
+module.exports = range => connector => {
 
 	const decoratedReceiving = connector.receiving;
 	connector.receiving = function (callback) {

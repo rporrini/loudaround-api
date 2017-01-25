@@ -1,8 +1,6 @@
-const localized = require('./localizedConnector');
-
-module.exports = (clients, range) => connector => {
+module.exports = (clients, localized) => connector => {
 	localized(connector)
 		.receiving(message => {
-			clients(connector.socket()).forEach(client => localized(client, range).send(message));
+			clients(connector.socket()).forEach(client => localized(client).send(message));
 		});
 };

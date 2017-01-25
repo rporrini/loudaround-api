@@ -8,14 +8,14 @@ describe('localizedConnector', function () {
 		const toBeDecorated = {
 			a: 'property'
 		};
-		return expect(connector(toBeDecorated).a).to.be.equal('property');
+		return expect(connector()(toBeDecorated).a).to.be.equal('property');
 	});
 
 	it('should forward the receiving callback to the decorated connector', function () {
 		const socket = new event();
 		const spy = sinon.spy();
 
-		connector(socketConnector(socket)).receiving(spy);
+		connector()(socketConnector(socket)).receiving(spy);
 		socket.emit('message', message());
 
 		return expect(spy.called).to.be.true;
@@ -24,7 +24,7 @@ describe('localizedConnector', function () {
 	it('should track the latest sent position', function () {
 		const socket = new event();
 
-		connector(socketConnector(socket)).receiving(() => {});
+		connector()(socketConnector(socket)).receiving(() => {});
 		socket.emit('message', message());
 
 		return expect(socket.position).to.be.eql(JSON.parse(message()).position);
@@ -33,7 +33,7 @@ describe('localizedConnector', function () {
 	it('should not forward messages if the latest position is unknown', function () {
 		const send = sinon.spy();
 
-		connector(socketConnector({
+		connector()(socketConnector({
 			send
 		})).send(message());
 
@@ -45,7 +45,7 @@ describe('localizedConnector', function () {
 		const socket = new event();
 		socket.send = send;
 
-		const c = connector(socketConnector(socket), 1);
+		const c = connector(1)(socketConnector(socket));
 		c.receiving(() => {});
 		socket.emit('message', message());
 		c.send(message());
@@ -58,7 +58,7 @@ describe('localizedConnector', function () {
 		const socket = new event();
 		socket.send = send;
 
-		const c = connector(socketConnector(socket), 0);
+		const c = connector(0)(socketConnector(socket));
 		c.receiving(() => {});
 		socket.emit('message', message());
 		c.send(message());
