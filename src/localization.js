@@ -9,14 +9,14 @@ module.exports = range => connector => {
 	const decoratedReceiving = connector.receiving;
 	connector.receiving = function (callback) {
 		return decoratedReceiving(rawMessage => {
-			connector.position = message(rawMessage).position;
+			connector.socket().position = message(rawMessage).position;
 			callback(rawMessage);
 		});
 	};
 
 	const decoratedSend = connector.send;
 	connector.send = function (rawMessage) {
-		const position = connector.position;
+		const position = connector.socket().position;
 		if (position) {
 			const last = asGeo(position);
 			const current = asGeo(message(rawMessage).position);

@@ -1,4 +1,3 @@
 module.exports = () => connector => {
-	connector.send('OK');
-	connector.close();
+	connector.send('OK').close();
 };
