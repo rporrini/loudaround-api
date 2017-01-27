@@ -4,7 +4,7 @@ describe('forward', function () {
 	it('should wrap a function', function () {
 		const spy = sinon.spy();
 
-		handler()(spy)();
+		handler()(spy)({});
 
 		return expect(spy.called).to.be.true;
 	});
@@ -16,13 +16,13 @@ describe('forward', function () {
 
 		handler()(spy)(socket);
 
-		return expect(spy.lastCall.args[0].socket()).to.be.equal(socket);
+		return expect(spy.lastCall.args[0]).to.be.equal(socket);
 	});
 	it('should not block the execution on exceptions', function () {
 		const error = new Error();
 		const console = sinon.spy();
 
-		handler(console)(sinon.stub().throws(error))();
+		handler(console)(sinon.stub().throws(error))({});
 
 		return expect(console.lastCall.args[0]).to.be.equal(error);
 	});
