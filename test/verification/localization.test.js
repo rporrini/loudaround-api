@@ -1,13 +1,4 @@
-const withinTenMeters = 10;
-const fromBeautifulPlace = {
-	lat: 45,
-	lon: 8
-};
-const fromPlaceFarAway = {
-	lat: 46,
-	lon: 8
-};
-const connector = require('../../src/localization')(withinTenMeters);
+const connector = require('../../src/localization');
 const socketConnector = require('../../src/connector');
 const event = require('events');
 
@@ -17,14 +8,14 @@ describe('localization', function () {
 		const toBeDecorated = {
 			a: 'property'
 		};
-		return expect(connector(toBeDecorated).a).to.be.equal('property');
+		return expect(connector()(toBeDecorated).a).to.be.equal('property');
 	});
 
 	it('should forward the receiving callback to the decorated connector', function () {
 		const socket = new event();
 		const spy = sinon.spy();
 
-		connector(socketConnector(socket)).receiving(spy);
+		connector()(socketConnector(socket)).receiving(spy);
 		socket.emit('message', message());
 
 		return expect(spy.called).to.be.true;
@@ -33,7 +24,7 @@ describe('localization', function () {
 	it('should track the latest sent position', function () {
 		const socket = new event();
 
-		connector(socketConnector(socket)).receiving(() => {});
+		connector()(socketConnector(socket)).receiving(() => {});
 		socket.emit('message', message());
 
 		return expect(socket.position).to.be.eql(JSON.parse(message()).position);
@@ -42,7 +33,7 @@ describe('localization', function () {
 	it('should not forward messages if the latest position is unknown', function () {
 		const send = sinon.spy();
 
-		connector(socketConnector({
+		connector()(socketConnector({
 			send
 		})).send(message());
 
@@ -54,10 +45,10 @@ describe('localization', function () {
 		const socket = new event();
 		socket.send = send;
 
-		const c = connector(socketConnector(socket));
+		const c = connector(1)(socketConnector(socket));
 		c.receiving(() => {});
-		socket.emit('message', message(fromBeautifulPlace));
-		c.send(message(fromBeautifulPlace));
+		socket.emit('message', message());
+		c.send(message());
 
 		return expect(send.called).to.be.true;
 	});
@@ -67,10 +58,10 @@ describe('localization', function () {
 		const socket = new event();
 		socket.send = send;
 
-		const c = connector(socketConnector(socket));
+		const c = connector(0)(socketConnector(socket));
 		c.receiving(() => {});
-		socket.emit('message', message(fromBeautifulPlace));
-		c.send(message(fromPlaceFarAway));
+		socket.emit('message', message());
+		c.send(message());
 
 		return expect(send.called).to.be.false;
 	});

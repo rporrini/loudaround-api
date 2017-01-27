@@ -1,7 +1,7 @@
 const promise = require('bluebird');
 
 module.exports = socket => {
-	socket.receiving = callback => {
+	socket.receiving = function (callback) {
 		socket.on('message', callback);
 		return socket;
 	};
