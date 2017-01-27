@@ -65,13 +65,4 @@ describe('connector', function () {
 
 		return expect(send.calledWith('the message')).to.be.true;
 	});
-
-	it('exceptions should not be blocking', function () {
-
-		const send = sinon.stub().throws(new Error("Ignore me, I was thrown for testing purposes."));
-
-		connector({
-			send
-		}).send('the message');
-	});
 });

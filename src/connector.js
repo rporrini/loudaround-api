@@ -10,13 +10,8 @@ module.exports = socket => {
 		},
 
 		send: function (message) {
-			try {
-				socket.send(message);
-			} catch (e) {
-				console.log(e);
-			} finally {
-				return this;
-			}
+			socket.send(message);
+			return this;
 		},
 
 		close: function () {
